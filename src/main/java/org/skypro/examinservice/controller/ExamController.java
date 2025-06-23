@@ -14,7 +14,6 @@ import java.util.List;
 public class ExamController {
     private final ExaminerService examinerService;
 
-    @Autowired
     public ExamController(ExaminerService examinerService) {
         this.examinerService = examinerService;
     }
@@ -22,7 +21,7 @@ public class ExamController {
     @GetMapping("/get/{amount}")
     public ResponseEntity<?> getQuestions(@PathVariable int amount) {
         try {
-            return ResponseEntity.ok((List<Question>) examinerService.getQuestions(amount));
+            return ResponseEntity.ok(examinerService.getQuestions(amount));
         } catch (NotEnoughQuestionException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

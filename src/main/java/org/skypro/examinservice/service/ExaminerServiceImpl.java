@@ -13,7 +13,6 @@ public class ExaminerServiceImpl implements ExaminerService {
     private final Random random = new Random();
     private final QuestionService questionService;
 
-    @Autowired
     public ExaminerServiceImpl (QuestionService questionService) {
         this.questionService = questionService;
     }

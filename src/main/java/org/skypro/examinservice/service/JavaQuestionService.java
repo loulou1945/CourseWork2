@@ -1,6 +1,7 @@
 package org.skypro.examinservice.service;
 
 import org.skypro.examinservice.domain.Question;
+import org.skypro.examinservice.exception.NoQuestionAvailableException;
 import org.skypro.examinservice.exception.QuestionFoundException;
 import org.skypro.examinservice.exception.QuestionNotFoundException;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class JavaQuestionService implements QuestionService {
     public Question addQuestion(String question, String answer) {
         Question newQuestion = new Question(question, answer);
         if (questions.contains(newQuestion)) {
-            throw new QuestionFoundException("There is already such a question" + question);
+            throw new QuestionFoundException("There is already such a question " + question);
         }
         questions.add(newQuestion);
         return newQuestion;
@@ -41,6 +42,9 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
+        if (questions.isEmpty()) {
+            throw new NoQuestionAvailableException("No questions available in storage");
+        }
         return questions.get(random.nextInt(questions.size()));
     }
 }

@@ -2,24 +2,24 @@ package org.skypro.examinservice.controller;
 
 import org.skypro.examinservice.domain.Question;
 import org.skypro.examinservice.service.JavaQuestionService;
+import org.skypro.examinservice.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
 @RequestMapping("/exam/java")
 public class JavaQuestionController {
-    private final JavaQuestionService questionService;
+    private final QuestionService questionService;
 
-    @Autowired
-    public JavaQuestionController(JavaQuestionService questionService) {
+    public JavaQuestionController(QuestionService questionService) {
         this.questionService = questionService;
     }
 
@@ -42,8 +42,7 @@ public class JavaQuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Question>> getAllQuestions() {
-        List<Question> questions = (List<Question>) questionService.getAllQuestions();
-        return new ResponseEntity<>(questions, HttpStatus.OK);
+    public Collection<Question> getAllQuestions() {
+        return questionService.getAllQuestions();
     }
 }
